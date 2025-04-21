@@ -1,0 +1,58 @@
+{
+  "scopeName": "source.osmia",
+  "name": "Osmia",
+  "patterns": [
+    {
+      "name": "comment.block.osmia",
+      "begin": "\\{\\{#",
+      "end": "\\}\\}",
+      "patterns": [{ "include": "#insideExpr" }]
+    },
+    {
+      "name": "keyword.control.osmia",
+      "match": "\\{\\{\\s*(if|elseif|while|for|in|return|fn|print)\\b"
+    },
+    {
+      "name": "keyword.control.osmia",
+      "match": "\\{\\{\\s*(else|fi|done|break|continue)\\s*\\}\\}"
+    },
+    {
+      "name": "meta.expression.osmia",
+      "begin": "\\{\\{",
+      "end": "\\}\\}",
+      "patterns": [{ "include": "#insideExpr" }]
+    }
+  ],
+  "repository": {
+    "insideExpr": {
+      "patterns": [
+        {
+          "name": "variable.osmia",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+        },
+        {
+          "name": "string.quoted.double.osmia",
+          "match": "\"[^\"]*\""
+        },
+        {
+          "name": "string.quoted.single.osmia",
+          "match": "'[^']*'"
+        },
+        {
+          "name": "constant.numeric.osmia",
+          "match": "\\b\\d+(\\.\\d+)?\\b"
+        },
+        {
+          "name": "keyword.operator.osmia",
+          "match": "==|!=|\\|\\||&&|\\+|\\-|\\*|\\/|%|>|<|>=|<=|\\?|:|=|\\.|,|;|\\[|\\]"
+        },
+        {
+          "name": "constant.language.boolean.osmia",
+          "match": "\\b(true|false|null)\\b"
+        }
+      ]
+    }
+  },
+  "fileTypes": ["osmia"],
+  "scopeName": "source.osmia"
+}

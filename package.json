@@ -17,6 +17,21 @@
         "command": "osmia.run",
         "title": "osmia: run"
       }
+    ],
+    "languages": [
+      {
+        "id": "osmia",
+        "extensions": [".osmia"],
+        "aliases": ["Osmia", "osmia"],
+        "configuration": "./language/osmia-language.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "osmia",
+        "scopeName": "source.osmia",
+        "path": "./language/osmia.tmLanguage.json"
+      }
     ]
   },
   "scripts": {
