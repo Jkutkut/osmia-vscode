@@ -1,0 +1,52 @@
+#!/bin/env bash
+
+package="package.json"
+lock="package-lock.json"
+
+check_version() {
+    # Check if file exists
+    if [ ! -f "$package" ]; then
+        echo "❌ $package not found"
+        exit 1
+    fi
+    # Check if file is fully staged
+    if ! git diff --cached --name-only | grep -q "$package"; then
+        echo "❌ $package is not staged. Please update the version of this commit"
+        exit 1
+    fi
+    if git ls-files --modified | grep -q "$package"; then
+        echo "❌ $package is not fully in the index"
+        exit 1
+    fi
+    old_version="$(git show HEAD:$package | grep -m 1 version | cut -d '"' -f 4)"
+    new_version=$(grep -m 1 version $package | cut -d '"' -f 4)
+    if [ "$old_version" == "" ] || [ "$new_version" == "" ]; then
+        echo "❌ Could not find version in $package"
+        exit 1
+    fi
+    if [ "$old_version" == "$new_version" ]; then
+        echo "❌ $package version not updated ($old_version)"
+        exit 1
+    fi
+    echo "✅ $package version updated: $old_version -> $new_version"
+}
+
+ensure_lock_up_to_date() {
+    if [ ! -f "$lock" ]; then
+        echo "❌ $lock not found"
+        exit 1
+    fi
+    if ! git diff --cached --name-only | grep -q "$lock"; then
+        echo "❌ $lock is not staged."
+        exit 1
+    fi
+    if git ls-files --modified | grep -q "$lock"; then
+        echo "❌ $lock is not fully in the index"
+        exit 1
+    fi
+    echo "✅ $lock ready to be committed"
+
+}
+
+check_version || exit 1
+ensure_lock_up_to_date || exit 1
