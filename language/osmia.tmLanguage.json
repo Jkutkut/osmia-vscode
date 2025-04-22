@@ -14,7 +14,7 @@
     },
     {
       "name": "keyword.control.osmia",
-      "match": "\\{\\{\\s*(else|fi|done|break|continue)\\s*\\}\\}"
+      "match": "\\{\\{(else|fi|done|break|continue)\\}\\}"
     },
     {
       "name": "meta.expression.osmia",
