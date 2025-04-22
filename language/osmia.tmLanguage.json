@@ -1,6 +1,7 @@
 {
   "scopeName": "source.osmia",
   "name": "Osmia",
+  "fileTypes": ["osmia"],
   "patterns": [
     {
       "name": "comment.block.osmia",
@@ -52,7 +53,5 @@
         }
       ]
     }
-  },
-  "fileTypes": ["osmia"],
-  "scopeName": "source.osmia"
+  }
 }
