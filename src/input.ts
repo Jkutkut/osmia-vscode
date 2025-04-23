@@ -2,12 +2,6 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import {Result, Option} from "./utils";
 
-interface FileContentProps {
-  extension: string;
-  language: string;
-  openLabel?: string;
-}
-
 const getOpenFile: (extension: string, language: string) => Option<vscode.TextDocument> = (extension, language) => {
   const openEditors = vscode.window.visibleTextEditors;
   for (const editor of openEditors) {
@@ -27,16 +21,37 @@ const getOpenFile: (extension: string, language: string) => Option<vscode.TextDo
   return {};
 };
 
-const getFileContent: (args: FileContentProps) => Promise<Result<string, string>> = async ({
+interface FileContentProps {
+  extension: string;
+  language: string;
+  openLabel?: string;
+  canBeNull?: boolean;
+}
+
+const getFileContent: (args: FileContentProps) => Promise<Result<string | null, string>> = async ({
   extension,
   language,
-  openLabel
+  openLabel,
+  canBeNull
 }) => {
   openLabel = openLabel ?? `Select ${extension} file`;
+  canBeNull = canBeNull ?? false;
 
   const alreadyOpenFile = getOpenFile(extension, language);
   if (alreadyOpenFile.data) {
     return { data: alreadyOpenFile.data.getText() };
+  }
+
+  if (canBeNull) {
+    const confirmation = await vscode.window.showInformationMessage(
+      `No ${extension} file found. Do you want to open one?`,
+      'Yes',
+      'No'
+    );
+    console.debug('Confirmation:', confirmation);
+    if (confirmation === 'No') {
+      return { data: null };
+    }
   }
 
   const f = await vscode.window.showOpenDialog({
@@ -49,7 +64,7 @@ const getFileContent: (args: FileContentProps) => Promise<Result<string, string>
   }
   const content = fs.readFileSync(f[0].fsPath, 'utf8');
   if (!content || content.length === 0) {
-    return { error: 'File is empty' };
+    return { error: `A ${extension} file must be selected` };
   }
   return { data: content };
 };

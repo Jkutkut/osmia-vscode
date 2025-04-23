@@ -1,6 +1,6 @@
 import {Result} from "./utils";
 
-export const runOsmia = (code: string, context?: string): Result<string, string> => {
+export const runOsmia = (code: string, context: string | null): Result<string, string> => {
   const command = [
     'osmia',
     '--code-str',
@@ -18,6 +18,6 @@ export const runOsmia = (code: string, context?: string): Result<string, string>
     return { data: output };
   } catch (error: any) {
     console.error('Error executing command:', error.message);
-    return { error: error.message };
+    return { error: error.stderr };
   }
 }

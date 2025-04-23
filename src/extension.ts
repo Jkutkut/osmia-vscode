@@ -21,9 +21,10 @@ export function activate(context: vscode.ExtensionContext) {
       const jsonContent = await getFileContent({
         extension: 'json',
         language: 'json',
-        openLabel: 'Select context as JSON'
+        openLabel: 'Select context as JSON',
+        canBeNull: true
       });
-      if (jsonContent.error) { // TODO allow empty context
+      if (jsonContent.error) {
         vscode.window.showErrorMessage(`Error: ${jsonContent.error}`);
         return;
       }
@@ -31,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
       console.debug('Osmia File Content:', osmiaContent.data);
       console.debug('JSON File Content:', jsonContent.data);
 
-      const result = runOsmia(osmiaContent.data!, jsonContent.data);
+      const result = runOsmia(osmiaContent.data!, jsonContent.data!);
       if (result.error) {
         vscode.window.showErrorMessage(`Error: ${result.error}`);
         return;
