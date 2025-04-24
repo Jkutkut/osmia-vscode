@@ -7,7 +7,7 @@
       "name": "comment.block.osmia",
       "begin": "\\{\\{#",
       "end": "\\}\\}",
-      "patterns": [{ "include": "#insideExpr" }]
+      "patterns": [{ "exclude": "#insideExpr" }]
     },
     {
       "name": "keyword.control.osmia",
@@ -28,6 +28,14 @@
     "insideExpr": {
       "patterns": [
         {
+          "name": "constant.language.boolean.osmia",
+          "match": "\\b(true|false)\\b"
+        },
+        {
+          "name": "constant.language.null.osmia",
+          "match": "\\bnull\\b"
+        },
+        {
           "name": "variable.osmia",
           "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
         },
@@ -36,20 +44,12 @@
           "match": "\"[^\"]*\""
         },
         {
-          "name": "string.quoted.single.osmia",
-          "match": "'[^']*'"
-        },
-        {
           "name": "constant.numeric.osmia",
           "match": "\\b\\d+(\\.\\d+)?\\b"
         },
         {
           "name": "keyword.operator.osmia",
           "match": "==|!=|\\|\\||&&|\\+|\\-|\\*|\\/|%|>|<|>=|<=|\\?|:|=|\\.|,|;|\\[|\\]"
-        },
-        {
-          "name": "constant.language.boolean.osmia",
-          "match": "\\b(true|false|null)\\b"
         }
       ]
     }

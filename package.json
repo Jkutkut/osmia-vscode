@@ -2,7 +2,7 @@
   "name": "osmia",
   "displayName": "osmia",
   "description": "",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "engines": {
     "vscode": "^1.99.0"
   },

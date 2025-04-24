@@ -1,0 +1,16 @@
+{{# Primitives}}
+Integer: {{ 42 }} {{ -12 }} {{ 0}}
+Float: {{ 3.14 }} {{ -0.001 }} {{ 2.71828 }}
+Boolean: {{ true }} {{ false }}
+Null: {{ null }}
+String: {{ "Hello, Osmia!" }} {{ "" }}
+Single Quote: Not valid {{# 'Hello, Osmia!' }} a {{# '' }}
+
+{{# Collections}}
+Array: {{ [1, 2] }} {{ [true, false] }} {{ ["", "foo", null] }}
+Object: {{ { "name": "Alice", "age": 30, "isAdmin": false } }}
+
+{{# Variables and Assignments}}
+{{ x = 10 }}
+{{ greeting = "Hello" }}
+{{ y = x }}
