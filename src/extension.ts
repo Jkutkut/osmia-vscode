@@ -29,9 +29,6 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      console.debug('Osmia File Content:', osmiaContent.data);
-      console.debug('JSON File Content:', jsonContent.data);
-
       const result = runOsmia(osmiaContent.data!, jsonContent.data!);
       if (result.error) {
         vscode.window.showErrorMessage(`Error: ${result.error}`);

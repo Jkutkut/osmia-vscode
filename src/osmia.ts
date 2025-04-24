@@ -1,13 +1,26 @@
 import {Result} from "./utils";
 
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
+
+function persistAsTmpFile(name: string, content: string): string {
+  const date = new Date();
+  const dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.${date.getHours()}-${date.getMinutes()}`
+  const tmpFilePath = path.join(os.tmpdir(), `${name}.${dateStr}.tmp`);
+  fs.writeFileSync(tmpFilePath, content, { encoding: 'utf8' });
+  return tmpFilePath;
+}
+
 export const runOsmia = (code: string, context: string | null): Result<string, string> => {
+  const codeFile = persistAsTmpFile('code', code);
   const command = [
     'osmia',
-    '--code-str',
-    `'${code}'`
+    '--code', codeFile,
   ];
   if (context) {
-    command.push('--ctx-str', `'${context}'`);
+    const contextFile = persistAsTmpFile('context', context);
+    command.push('--ctx', contextFile);
   }
   const fullCommand = command.join(' ');
   console.debug('Running command:', fullCommand);
