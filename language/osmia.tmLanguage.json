@@ -44,6 +44,10 @@
           "match": "\"[^\"]*\""
         },
         {
+          "name": "string.quoted.single.osmia",
+          "match": "'[^']*'"
+        },
+        {
           "name": "constant.numeric.osmia",
           "match": "\\b\\d+(\\.\\d+)?\\b"
         },
