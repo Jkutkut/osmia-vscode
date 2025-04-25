@@ -58,6 +58,51 @@
         {
           "name": "keyword.operator.osmia",
           "match": "==|!=|\\|\\||&&|\\+|\\-|\\*|\\/|%|>|<|>=|<=|\\?|:|=|\\.|,|;"
+        },
+        {
+          "name": "meta.brace.round.osmia",
+          "begin": "\\(",
+          "end": "\\)",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.group.begin" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.section.group.end" }
+          },
+          "contentName": "meta.group.inner.osmia",
+          "patterns": [
+            { "include": "#insideExpr" }
+          ]
+        },
+        {
+          "name": "meta.brace.square.osmia",
+          "begin": "\\[",
+          "end": "\\]",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.list.begin" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.section.list.end" }
+          },
+          "contentName": "meta.group.inner.osmia",
+          "patterns": [
+            { "include": "#insideExpr" }
+          ]
+        },
+        {
+          "name": "meta.brace.curly.osmia",
+          "begin": "\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.block.begin" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.section.block.end" }
+          },
+          "contentName": "meta.group.inner.osmia",
+          "patterns": [
+            { "include": "#insideExpr" }
+          ]
         }
       ]
     }
