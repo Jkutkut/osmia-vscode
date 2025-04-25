@@ -1,16 +1,69 @@
 {{# Primitives}}
-Integer: {{ 42 }} {{ -12 }} {{ 0}}
-Float: {{ 3.14 }} {{ -0.001 }} {{ 2.71828 }}
-Boolean: {{ true }} {{ false }}
-Null: {{ null }}
-String: {{ "Hello, Osmia!" }} {{ "" }}
-Single Quote: Not valid {{# 'Hello, Osmia!' }} a {{# '' }}
+{{ 42 }} {{ -12 }} {{ 0}}
+{{ 3.14 }} {{ -0.001 }} {{ 2.71828 }}
+{{ true }} {{ false }}
+{{ null }}
+{{ "Hello, Osmia!" }} {{ "" }}
+{{ 'Hello, Osmia!' }} {{ '' }}
 
 {{# Collections}}
-Array: {{ [1, 2] }} {{ [true, false] }} {{ ["", "foo", null] }}
-Object: {{ { "name": "Alice", "age": 30, "isAdmin": false } }}
+{{ [] }} {{ [1, 2] }} {{ [true, false] }} {{ ["", "foo", null] }}
+{{ {} }} {{ { "name": "Alice", "age": 30, "isAdmin": false } }}
+{{ [[], [[], []]] }}
+{{ { "obj": {}, "2": { "obj": {} } } }}
+
+{{# Grouping}}
+{{ (2 + 3) * 4 != 2 + (3 * 4) }}
+{{ 2 + (3 * 4) == 2 + 3 * 4 }}
+{{ (((2 + 2)-1) * 2) == (2 + 2 - 1) * 2 }}
 
 {{# Variables and Assignments}}
-{{ x = 10 }}
+{{ x = 10 }} {{ y = x }}
 {{ greeting = "Hello" }}
-{{ y = x }}
+{{ math.abs }}
+{{ math.test = fn (x) => x * x * x }}
+{{ arr = [] }}{{ arr[0] = 10 }}{{ arr }}
+{{ obj = {} }}{{ obj.foo = "bar" }}{{ obj }}
+
+{{# Callables }}
+{{ math.max(5, 10) }}
+{{ true?then("Yes", "No") }}
+{{ fn (x, y) => x + y }}
+
+{{# Arithmetic Operations}}
+{{ 5 + 3 }}{{ 10 - 4 }}
+{{ 6 * 7 }}{{ 20 / 5 }}{{ 10 % 3 }}
+{{ -5 }} {{ +5 }} {{ +-+--5 }}
+
+{{# Comparison Operations}}
+{{ 5 == 5 }}{{ 5 != 3 }}
+{{ 7 > 5 }}{{ 3 < 8 }}
+{{ 5 >= 5 }}{{ 4 <= 6 }}
+
+{{# Logical Operations}}
+{{ true && false }}
+{{ true || false }}
+{{ !true }}
+
+{{# Bitwise Operations}}
+{{ 5 & 3 }}{{ 5 | 2 }}{{ 5 ^ 1 }}
+{{ 1 << 2 }}{{ 8 >> 1 }}
+
+{{# Escaping}}
+{ { not evaluated } } {{ '{ { foo } }' }}
+
+{{# Methods }}
+{{ "hello"?len() }} {{ 1?to_bool() }} {{ 1.1?to_int() }}
+{{ true?type() }} {{ null?to_string() }}
+{{ [1, 2]?len() }} {{ { "foo": "bar" }?keys()?sort() }}
+{{ (fn (x) => x)?type() }}
+{{ "foo"?switch("foo", fn (x) => x, "bar", math.abs) }}
+{{ ["s", 1, 1.23, true, false, null, [], {}, fn(x) => x]?map(fn (x) => x?type()) }}
+
+
+Plain text without syntax
+[1, 2, 3]?map(fn (x) => x?type())
+{ "foo": "bar" }?type() {} { v: "foo" }
+"This is a string" + foo
+12 * 2 << 2 == 12 <= 2 >= 12
+fn (foo) => foo?type()

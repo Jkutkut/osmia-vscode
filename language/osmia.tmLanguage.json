@@ -32,6 +32,10 @@
           "match": "\\b(true|false)\\b"
         },
         {
+          "name": "constant.language.control.osmia",
+          "match": "\\b(fn|in)\\b"
+        },
+        {
           "name": "constant.language.null.osmia",
           "match": "\\bnull\\b"
         },
@@ -53,7 +57,7 @@
         },
         {
           "name": "keyword.operator.osmia",
-          "match": "==|!=|\\|\\||&&|\\+|\\-|\\*|\\/|%|>|<|>=|<=|\\?|:|=|\\.|,|;|\\[|\\]"
+          "match": "==|!=|\\|\\||&&|\\+|\\-|\\*|\\/|%|>|<|>=|<=|\\?|:|=|\\.|,|;"
         }
       ]
     }
