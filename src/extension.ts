@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import {getFileContent} from './input';
 import {storeOutput} from './output';
 import {runOsmia} from './osmia';
+import {init} from './init';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('osmia is now active!');
@@ -39,6 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showErrorMessage(`Error: ${err.message}`);
     }
   }));
+  init();
 }
 
 export function deactivate() {

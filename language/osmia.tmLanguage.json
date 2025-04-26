@@ -11,7 +11,10 @@
     },
     {
       "name": "keyword.control.osmia",
-      "match": "\\{\\{\\s*(if|elseif|while|for|in|return|fn|print)\\b"
+      "begin": "\\{\\{(if|elseif|while|for|in|return|fn|print)\\b",
+      "end": "\\}\\}",
+      "contentName": "meta.expression.osmia",
+      "patterns": [{ "include": "#insideExpr" }]
     },
     {
       "name": "keyword.control.osmia",
@@ -32,7 +35,7 @@
           "match": "\\b(true|false)\\b"
         },
         {
-          "name": "constant.language.control.osmia",
+          "name": "keyword.control.osmia",
           "match": "\\b(fn|in)\\b"
         },
         {
@@ -57,7 +60,23 @@
         },
         {
           "name": "keyword.operator.osmia",
-          "match": "==|!=|\\|\\||&&|\\+|\\-|\\*|\\/|%|>|<|>=|<=|\\?|:|=|\\.|,|;"
+          "match": "[\\+\\-\\*\\/%]"
+        },
+        {
+          "name": "keyword.operator.osmia",
+          "match": "==|!=|<|>|<=|<="
+        },
+        {
+          "name": "keyword.operator.osmia",
+          "match": "&&|\\|\\||!"
+        },
+        {
+          "name": "keyword.operator.osmia",
+          "match": "[,;:=?^.]"
+        },
+        {
+          "name": "keyword.operator.osmia",
+          "match": "[(){}\\[\\]]"
         }
       ]
     }

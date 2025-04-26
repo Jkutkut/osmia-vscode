@@ -1,3 +1,4 @@
+{{# ******************** Expressions ******************** }}
 {{# Primitives}}
 {{ 42 }} {{ -12 }} {{ 0}}
 {{ 3.14 }} {{ -0.001 }} {{ 2.71828 }}
@@ -67,3 +68,70 @@ Plain text without syntax
 "This is a string" + foo
 12 * 2 << 2 == 12 <= 2 >= 12
 fn (foo) => foo?type()
+
+{{# ******************** Statements ******************** }}
+{{# Print }}
+{{print 42 }} {{print "foo"}}
+{{print 1 + 2 * v }}
+{{print true & false | null?to_bool() }}
+
+{{# Assign }}
+{{ v = "foo" }} {{ v = 42 }}
+{{ b = true & false | null?to_bool() }}
+{{ v = 1 + 2 * v }}
+{{ f = fn (x, y) => x + y }}
+
+{{# If, Elseif, Else }}
+{{if false}}{{fi}}
+{{if true }}
+    {{ v = 1 }}
+{{else}}
+    {{ v = 2 }}
+{{fi}}
+
+{{if v == 1}}
+    {{ v = 1 }}
+{{elseif v == 2}}
+    {{ v = 2 }}
+{{else}}
+    {{ v = 3 }}
+{{fi}}
+
+{{# While }}
+{{while false}}{{done}}
+{{while true }}
+    {{ v = 1 }}
+{{done}}
+
+{{# For }}
+{{ arr = [1, 2, 3] }}
+{{for i in [1, 2, 3]}}
+    {{ i }}
+{{done}}
+{{for i in arr}}
+    {{ i }}
+{{done}}
+
+{{# Break, Continue }}
+{{for i in arr}}
+    {{if i <= 1}}{{continue}}{{fi}}
+    {{ i }}
+{{done}}
+{{for i in arr}}
+    {{if i == 2}}{{break}}{{fi}}
+    {{ i }}
+{{done}}
+
+{{# Function, Return }}
+{{fn add; x, y }}
+    {{return x + y }}
+{{done}}
+
+{{fn fibonacci; n }}
+    {{if n == 0}}
+        {{return 0}}
+    {{elseif n == 1}}
+        {{return 1}}
+    {{fi}}
+    {{return fibonacci(n - 1) + fibonacci(n - 2)}}
+{{done}}
