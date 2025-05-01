@@ -1,8 +1,9 @@
 {
   "name": "osmia",
   "displayName": "osmia",
-  "description": "",
-  "version": "0.0.12",
+  "description": "Extension for the osmia language",
+  "repository": "https://github.com/jkutkut/osmia",
+  "version": "0.0.13",
   "engines": {
     "vscode": "^1.99.0"
   },
