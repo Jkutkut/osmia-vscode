@@ -1,15 +1,21 @@
 {
   "name": "osmia",
+  "publisher": "jkutkut",
   "displayName": "osmia",
   "description": "Extension for the osmia language",
-  "repository": "https://github.com/jkutkut/osmia",
-  "version": "0.0.13",
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "osmia",
+    "templating"
+  ],
+  "license": "GNU GPL v3",
+  "repository": "https://github.com/jkutkut/osmia-vscode",
+  "version": "0.0.14",
   "engines": {
     "vscode": "^1.99.0"
   },
-  "categories": [
-    "Other"
-  ],
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
@@ -44,7 +50,9 @@
     "test": "vscode-test",
     "enable-git-hooks": "git config core.hooksPath .githooks",
     "disable-git-hooks": "git config --unset core.hooksPath",
-    "prepare-commit": "$EDITOR ./package.json ./package-lock.json && git add -N . && git add -p && git commit"
+    "prepare-commit": "$EDITOR ./package.json ./package-lock.json && git add -N . && git add -p && git commit",
+    "build-extension": "vsce package",
+    "publish-extension": "vsce publish"
   },
   "devDependencies": {
     "@types/vscode": "^1.99.0",
