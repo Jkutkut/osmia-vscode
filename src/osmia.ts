@@ -1,4 +1,5 @@
 import {Result} from "./utils";
+import {run, run_ctx} from 'osmia-npm';
 
 import * as fs from 'fs';
 import * as os from 'os';
@@ -12,10 +13,20 @@ function persistAsTmpFile(name: string, content: string): string {
   return tmpFilePath;
 }
 
-export const runOsmia = (code: string, context: string | null): Result<string, string> => {
+export interface RunOsmiaOptions {
+  code: string;
+  context: string | null;
+}
+
+export interface RunOsmiaCmdOptions extends RunOsmiaOptions {
+  osmiaCmd: string | null;
+}
+
+export const runOsmiaCmd = ({ osmiaCmd, code, context }: RunOsmiaCmdOptions): Result<string, string> => {
+  osmiaCmd = osmiaCmd || 'osmia';
   const codeFile = persistAsTmpFile('code', code);
   const command = [
-    'osmia',
+    osmiaCmd,
     '--code', codeFile,
   ];
   if (context) {
@@ -32,5 +43,23 @@ export const runOsmia = (code: string, context: string | null): Result<string, s
   } catch (error: any) {
     console.error('Error executing command:', error.message);
     return { error: error.stderr };
+  }
+};
+
+export const runOsmia = ({ code, context }: RunOsmiaOptions): Result<string, string> => {
+  console.debug("Running native osmia:\n", code);
+  console.group("context:");
+  console.debug(context);
+  console.groupEnd();
+  try {
+    if (context) {
+      return { data: run_ctx(context, code) };
+    } else {
+      return { data: run(code) };
+    }
+  }
+  catch (error: any) {
+    console.error('Error executing command:', error.message);
+    return { error: error.message };
   }
 }

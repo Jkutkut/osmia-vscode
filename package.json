@@ -12,7 +12,7 @@
   ],
   "license": "GNU GPL v3",
   "repository": "https://github.com/jkutkut/osmia-vscode",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.99.0"
   },
@@ -42,6 +42,7 @@
     ]
   },
   "scripts": {
+    "full-reinstall": "npm cache clean --force && rm -rf node_modules package-lock.json && npm install",
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
@@ -53,6 +54,9 @@
     "prepare-commit": "$EDITOR ./package.json ./package-lock.json && git add -N . && git add -p && git commit",
     "build-extension": "vsce package",
     "publish-extension": "vsce publish"
+  },
+  "dependencies": {
+      "osmia-npm": "github:jkutkut/osmia-npm#v0.1.11"
   },
   "devDependencies": {
     "@types/vscode": "^1.99.0",

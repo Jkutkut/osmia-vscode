@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import {getFileContent} from './input';
 import {storeOutput} from './output';
 import {runOsmia} from './osmia';
-import {init} from './init';
+import {init as initSettings} from './init';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('osmia is now active!');
@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const result = runOsmia(osmiaContent.data!, jsonContent.data!);
+      const result = runOsmia({code: osmiaContent.data!, context: jsonContent.data!});
       if (result.error) {
         vscode.window.showErrorMessage(`Error: ${result.error}`);
         return;
@@ -40,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showErrorMessage(`Error: ${err.message}`);
     }
   }));
-  init();
+  initSettings();
 }
 
 export function deactivate() {
