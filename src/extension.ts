@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {getFileContent} from './input';
 import {storeOutput} from './output';
-import {runOsmia} from './osmia';
+import {runOsmiaAsWorker} from './osmia';
 import {init as initSettings} from './init';
 
 export function activate(context: vscode.ExtensionContext) {
@@ -30,7 +30,28 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      const result = runOsmia({code: osmiaContent.data!, context: jsonContent.data!});
+      const TIMEOUT = 30000; // TODO use configuration
+
+      const cancelNotification: (onCancel: () => void) => void = (onCancel) => {
+        let information = "Osmia executing...";
+        if (TIMEOUT) {
+          information += ` (timeout: ${TIMEOUT / 1000}s)`;
+        }
+        vscode.window.showInformationMessage<string>(information, 'Cancel')
+          .then((selection) => {
+            if (selection === 'Cancel') {
+              onCancel();
+            }
+          });
+      };
+
+      const result = await runOsmiaAsWorker({
+        code: osmiaContent.data!, ctx: jsonContent.data!,
+        osmiaCmd: 'native',
+        executionTimeout: 30000,
+        cancelNotification,
+        cancelTimeout: 3000
+      });
       if (result.error) {
         vscode.window.showErrorMessage(`Error: ${result.error}`);
         return;
