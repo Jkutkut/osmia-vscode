@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import {init as initSettings} from './init';
+import {initSettings} from './settings';
 import commands from './commands';
 
 export function activate(context: vscode.ExtensionContext) {

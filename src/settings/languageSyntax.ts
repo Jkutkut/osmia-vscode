@@ -27,16 +27,6 @@ const setupLanguageSyntax = async () => {
       vscode.ConfigurationTarget.Global
     );
   }
-}
-
-const initializeSettings = async () => {
-  Promise.all([
-    setupLanguageSyntax()
-  ])
 };
 
-export const init = async () => {
-  Promise.all([
-    initializeSettings()
-  ]);
-}
+export default setupLanguageSyntax;
