@@ -12,7 +12,7 @@
   ],
   "license": "GNU GPL v3",
   "repository": "https://github.com/jkutkut/osmia-vscode",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "engines": {
     "vscode": "^1.99.0"
   },
@@ -39,7 +39,42 @@
         "scopeName": "source.osmia",
         "path": "./language/osmia.tmLanguage.json"
       }
-    ]
+    ],
+    "configuration": {
+        "title": "osmia",
+        "type": "object",
+        "properties": {
+            "osmia.executionTimeout.enabled": {
+                "scope": "machine-overridable",
+                "type": "boolean",
+                "default": true,
+                "markdownDescription": "Enable execution timeout. Code will be aborted if execution takes longer than `osmia.executionTimeout.time`."
+            },
+            "osmia.executionTimeout.time": {
+                "scope": "machine-overridable",
+                "type": "number",
+                "default": 60000,
+                "markdownDescription": "Execution timeout in milliseconds. If the execution takes longer than this, it will be aborted."
+            },
+            "osmia.executionTimeout.warnTime": {
+                "scope": "machine-overridable",
+                "type": "number",
+                "default": 1000,
+                "markdownDescription": "Warning timeout in milliseconds. If the execution takes longer than this, a notification will be shown. The execution can be aborted using this notification."
+            },
+            "osmia.osmiaEngine.native": {
+                "scope": "window",
+                "type": "boolean",
+                "default": true,
+                "markdownDescription": "Use the extension's wasm builtin implementation. If set to `false`, the `osmia.osmiaEngine.osmiaCmd` will be used."
+            },
+            "osmia.osmiaEngine.osmiaCmd": {
+                "scope": "window",
+                "type": "string",
+                "markdownDescription": "The command to invoke osmia on the system. Only used if `osmia.osmiaEngine.native` is set to `false`."
+            }
+        }
+    }
   },
   "scripts": {
     "full-reinstall": "npm cache clean --force && rm -rf node_modules package-lock.json && npm install",

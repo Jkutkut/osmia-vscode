@@ -72,22 +72,20 @@ export const runOsmia = ({ code, ctx }: RunOsmiaOptions): OsmiaOutput => {
 }
 
 export const runOsmiaAsWorker = (options: OsmiaWorkerProps): Promise<OsmiaOutput> => {
-  // const cancelTimeoutNbr = options.cancelTimeout ?? 10000;
-  // const executionTimeoutNbr = options.executionTimeout ?? 20000;
-  // const cancelNotification = options.cancelNotification;
-  // const osmiaOptions = {
-  //   code: options.code,
-  //   ctx: options.ctx,
-  //   osmiaCmd: options.osmiaCmd
-  // }; // TODO refactor
   const {
-    cancelTimeout,
     executionTimeout,
+    cancelTimeout,
     cancelNotification,
     ...osmiaOptions
   } = options;
-  const cancelTimeoutNbr = cancelTimeout ?? 10000;
+  const cancelTimeoutNbr = cancelTimeout ?? 1000;
   const executionTimeoutNbr = executionTimeout ?? 20000;
+
+  console.group();
+  console.debug("cancelTimeoutNbr", cancelTimeoutNbr);
+  console.debug("executionTimeoutNbr", executionTimeoutNbr);
+  console.debug("options", osmiaOptions);
+  console.groupEnd();
 
   const workerFile = path.join(__dirname, 'osmiaWorker.js');
   return new Promise((resolve, reject) => {

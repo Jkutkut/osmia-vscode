@@ -11,24 +11,23 @@ The official Visual Studio Code extension for [osmia](https://github.com/jkutkut
 ## Features
 
 - Syntax highlighting.
-
 - Command to run the current files as a Osmia program.
-
 - Automatic detection of Osmia and context files.
+- Configurable execution engine.
+- Fully customizable settings.
+- Built-in wasm engine.
 
 ## Requirements
 
-For now, Osmia must be already installed on your machine. It must be executable by the current user using the `osmia` keyword.
+A built-in osmia engine comes with the extension. A custom engine can be used instead by changing the configuration.
 
 ## Extension Settings
 
-Nothing for now :)
-
-## Known Issues
-
-- No option to disable the extension.
-- No option to change the invocation command / executing file.
-- No way to end execution while osmia is running.
+- `osmia.executionTimeout.enabled`: Enable execution timeout. Code will be aborted if execution takes longer than `osmia.executionTimeout.time`.
+- `osmia.executionTimeout.time`: Execution timeout in milliseconds. If the execution takes longer than this, it will be aborted.
+- `osmia.executionTimeout.warnTime`: Warning timeout in milliseconds. If the execution takes longer than this, a notification will be shown. The execution can be aborted using this notification.
+- `osmia.osmiaEngine.native`: Use the extension's wasm builtin implementation. If set to `false`, the `osmia.osmiaEngine.osmiaCmd` will be used.
+- `osmia.osmiaEngine.osmiaCmd`: The command to invoke osmia on the system. Only used if `osmia.osmiaEngine.native` is set to `false`.
 
 ## Release Notes
 
