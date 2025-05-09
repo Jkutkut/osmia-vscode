@@ -32,3 +32,7 @@ A built-in osmia engine comes with the extension. A custom engine can be used in
 ## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md) for details.
+
+## Known Issues
+
+- Testing not implemented, yet.
