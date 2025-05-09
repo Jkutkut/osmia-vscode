@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import {Result, Option} from "./utils";
+import {Option, Result} from '.';
 
 const getOpenFile: (extension: string, language: string) => Option<vscode.TextDocument> = (extension, language) => {
   const openEditors = vscode.window.visibleTextEditors;

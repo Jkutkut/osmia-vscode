@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import {getFileContent} from '../input';
-import {storeOutput} from '../output';
+import {getFileContent} from '../utils/input';
+import {storeOutput} from '../utils/output';
 import {runOsmiaAsWorker} from '../osmia';
 
 export const run = async () => {
