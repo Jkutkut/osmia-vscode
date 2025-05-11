@@ -2,14 +2,32 @@
 
 The official Visual Studio Code extension for [osmia](https://github.com/jkutkut/osmia).
 
+Osmia is a clean, expressive templating language library implemented in Rust.
+It is designed for building dynamic content in any programming language, allowing developers
+to generate HTML, SQL, JSON, configuration files, or code in various languages.
+
+![Code example of an osmia script that formats the output of a docker inspect command](https://raw.githubusercontent.com/Jkutkut/osmia-vscode/refs/heads/main/res/docker-inspect-code.png)
+
+## How to use
+
+Invoke the command by opening the command pallete and typing:
+
+```
+>osmia: run
+```
+
+In order to run the extension command, a osmia file is needed. Optionally, a context file (json) can be added to inject variables.
+- If no osmia file is open and visible on the editor, you will be prompted to select one.
+- If no context file is provided, you will be prompted to select one or run without context.
+
 ## Features
 
 - Syntax highlighting.
-- Command to run the current files as a Osmia program.
-- Automatic detection of Osmia and context files.
 - Configurable execution engine.
 - Fully customizable settings.
 - Built-in wasm engine.
+- Command to run the current files as a Osmia program.
+- Automatic detection of Osmia and context files.
 
 ## Requirements
 
