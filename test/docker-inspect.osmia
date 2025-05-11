@@ -1,0 +1,17 @@
+# Containers:
+
+{{for container in ctx}}
+## {{container.Name?replace("/", "")}}
+  {{cmd = container.Path}}
+  {{if container.Args?len() > 0}}
+    {{cmd = cmd + " " + container.Args?join(" ")}}
+  {{fi}}
+- cmd: `{{container.Path}}`
+  {{if container.HostConfig.Binds?len() > 0}}
+- binds:
+    {{for bind in container.HostConfig.Binds}}
+      {{bind_arr = bind?split(":")}}
+    - from `{{bind_arr[0]}}` to `{{bind_arr[1]}}`
+    {{done}}
+  {{fi}}
+{{done}}

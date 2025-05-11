@@ -1,3 +1,32 @@
-{
-    "v": true
-}
+[
+    {
+        "Path": "cargo",
+        "Args": [
+            "watch",
+            "--clear",
+            "-x",
+            "test",
+            "-x",
+            "doc --lib --examples --document-private-items"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 1,
+            "ExitCode": 0,
+            "Error": ""
+        },
+        "Name": "/osmia",
+        "RestartCount": 0,
+        "HostConfig": {
+            "Binds": [
+                "/home/jkutkut/github/osmia/osmia:/osmia",
+                "cargo_registy:/root/.cargo/registry"
+            ]
+        }
+    }
+]
