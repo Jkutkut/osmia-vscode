@@ -2,8 +2,15 @@ import * as vscode from 'vscode';
 import {getFileContent} from '../utils/input';
 import {storeOutput} from '../utils/output';
 import {runOsmiaAsWorker} from '../osmia';
+import {Result} from '../utils';
 
-export const run = async () => {
+interface RunCommandOptions {
+  requestCtx: boolean;
+}
+
+const runCommand = async ({
+  requestCtx,
+}: RunCommandOptions) => {
   try {
     const osmiaContent = await getFileContent({
       extension: 'osmia',
@@ -14,15 +21,18 @@ export const run = async () => {
       return;
     }
 
-    const jsonContent = await getFileContent({
-      extension: 'json',
-      language: 'json',
-      openLabel: 'Select context as JSON',
-      canBeNull: true
-    });
-    if (jsonContent.error) {
-      vscode.window.showErrorMessage(`Error: ${jsonContent.error}`);
-      return;
+    let jsonContent: Result<string | null, string> = {data: null};
+    if (requestCtx) {
+      jsonContent = await getFileContent({
+        extension: 'json',
+        language: 'json',
+        openLabel: 'Select context as JSON',
+        canBeNull: true
+      });
+      if (jsonContent.error) {
+        vscode.window.showErrorMessage(`Error: ${jsonContent.error}`);
+        return;
+      }
     }
 
     const osmiaConfig = vscode.workspace.getConfiguration('osmia');
@@ -61,3 +71,15 @@ export const run = async () => {
     vscode.window.showErrorMessage(`Error: ${err.message}`);
   }
 };
+
+export const run = async () => {
+  await runCommand({
+    requestCtx: true
+  });
+};
+
+export const runNoCtx = async () => {
+  await runCommand({
+    requestCtx: false
+  });
+}

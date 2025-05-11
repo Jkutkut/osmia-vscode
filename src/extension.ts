@@ -7,6 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.showInformationMessage('osmia is now active!');
 
   context.subscriptions.push(vscode.commands.registerCommand('osmia.run', commands.run));
+  context.subscriptions.push(vscode.commands.registerCommand('osmia.runNoCtx', commands.runNoCtx));
   initSettings();
 }
 

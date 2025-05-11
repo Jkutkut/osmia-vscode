@@ -13,7 +13,7 @@
   ],
   "license": "GNU GPL v3",
   "repository": "https://github.com/jkutkut/osmia-vscode",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "engines": {
     "vscode": "^1.99.0"
   },
@@ -24,6 +24,10 @@
       {
         "command": "osmia.run",
         "title": "osmia: run"
+      },
+      {
+        "command": "osmia.runNoCtx",
+        "title": "osmia: run (no context)"
       }
     ],
     "languages": [

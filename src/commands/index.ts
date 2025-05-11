@@ -1,5 +1,5 @@
-import {run} from './run';
+import {run, runNoCtx} from './run';
 
 export default {
-  run
+  run, runNoCtx
 };
