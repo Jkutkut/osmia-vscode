@@ -66,8 +66,8 @@ export const runOsmia = ({ code, ctx }: RunOsmiaOptions): OsmiaOutput => {
     }
   }
   catch (error: any) {
-    console.error('Error executing command:', error.message);
-    return { error: error.message };
+    console.error('Error executing native osmia:', error);
+    return { error: `${error}` };
   }
 }
 
@@ -110,14 +110,17 @@ export const runOsmiaAsWorker = (options: OsmiaWorkerProps): Promise<OsmiaOutput
 
     worker.on('message', (response: OsmiaOutput) => {
       endTimeouts();
+      console.debug('Worker response:', response);
       resolve(response);
     });
     worker.on('error', (error: any) => {
       endTimeouts();
+      console.error('Worker error:', error);
       reject(new Error(error));
     });
     worker.on('exit', (code: number) => {
       endTimeouts();
+      console.debug('Worker exit with code ', code);
       if (code !== 0) {
         reject(new Error(`Worker stopped with exit code ${code}`));
       }

@@ -13,7 +13,7 @@ parentPort.on('message', (task: OsmiaWorkerOptions) => {
       parentPort!.postMessage(response);
     })
     .catch((err) => {
-      parentPort!.postMessage(err);
+      parentPort!.postMessage({ error: err });
     });
 });
 
