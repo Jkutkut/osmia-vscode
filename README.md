@@ -1,11 +1,5 @@
 # osmia
 
-- [features](#features)
-- [requirements](#requirements)
-- [extension settings](#extension-settings)
-- [known issues](#known-issues)
-- [release notes](#release-notes)
-
 The official Visual Studio Code extension for [osmia](https://github.com/jkutkut/osmia).
 
 ## Features
