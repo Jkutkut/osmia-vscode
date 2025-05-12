@@ -13,7 +13,7 @@
   ],
   "license": "GNU GPL v3",
   "repository": "https://github.com/jkutkut/osmia-vscode",
-  "version": "0.4.1",
+  "version": "0.5.2",
   "engines": {
     "vscode": "^1.99.0"
   },
@@ -23,13 +23,38 @@
     "commands": [
       {
         "command": "osmia.run",
-        "title": "osmia: run"
+        "title": "osmia: run",
+        "category": "osmia",
+        "icon": "res/logo.png"
       },
       {
         "command": "osmia.runNoCtx",
-        "title": "osmia: run (no context)"
+        "title": "osmia: run (no context)",
+        "category": "osmia",
+        "icon": "res/logo.png"
       }
     ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "editorLangId == osmia",
+          "command": "osmia.run",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "editorLangId == osmia",
+          "command": "osmia.run",
+          "group": "navigation"
+        },
+        {
+          "when": "editorLangId == osmia",
+          "command": "osmia.runNoCtx",
+          "group": "navigation"
+        }
+      ]
+    },
     "languages": [
       {
         "id": "osmia",
