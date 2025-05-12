@@ -10,15 +10,17 @@ to generate HTML, SQL, JSON, configuration files, or code in various languages.
 
 ## How to use
 
-Invoke the command by opening the command pallete and typing:
+Create a osmia file by creating a file with the extension `.osmia` or by selecting the osmia language from the command pallete.
+
+An button with the osmia icon will appear in the editor to run the current file.
+You can also invoke the command with right click or by running the following command from the command palette:
 
 ```
 >osmia: run
 ```
 
-In order to run the extension command, a osmia file is needed. Optionally, a context file (json) can be added to inject variables.
-- If no osmia file is open and visible on the editor, you will be prompted to select one.
-- If no context file is provided, you will be prompted to select one or run without context.
+Optionally, a context file (json) can be added to inject variables.
+You will be prompted to select the file if none is detected.
 
 ## Features
 
