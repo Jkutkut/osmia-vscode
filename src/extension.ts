@@ -18,8 +18,13 @@ export function activate(context: vscode.ExtensionContext) {
 class OsmiaStmtCompletionProvider implements vscode.CompletionItemProvider {
   provideCompletionItems(
     document: vscode.TextDocument,
-    position: vscode.Position
+    position: vscode.Position,
+    _: vscode.CancellationToken,
+    context: vscode.CompletionContext
   ) {
+    if (context.triggerKind !== vscode.CompletionTriggerKind.TriggerCharacter) {
+      return;
+    }
     const STMT_START = '{{';
     const STMT_END = '}}';
     const currentLine = document.lineAt(position.line);
