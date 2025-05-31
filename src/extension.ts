@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {initSettings} from './settings';
 import commands from './commands';
-import {OsmiaStmtCompletionItemProvider} from './completion';
+import {OsmiaMethodCompletionItemProvider, OsmiaStmtCompletionItemProvider} from './completion';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('osmia is now active!');
