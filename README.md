@@ -25,6 +25,7 @@ You will be prompted to select the file if none is detected.
 ## Features
 
 - Syntax highlighting.
+- Intellisense for variables in context.
 - Configurable execution engine.
 - Fully customizable settings.
 - Built-in wasm engine.
