@@ -1,7 +1,11 @@
 import * as vscode from 'vscode';
 import {initSettings} from './settings';
 import commands from './commands';
-import {OsmiaMethodCompletionItemProvider, OsmiaStmtCompletionItemProvider} from './completion';
+import {
+  OsmiaCtxCompletionItemProvider,
+  OsmiaMethodCompletionItemProvider,
+  OsmiaStmtCompletionItemProvider
+} from './completion';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('osmia is now active!');
@@ -16,7 +20,9 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider(
     "osmia", new OsmiaStmtCompletionItemProvider(), "{"
   ));
-  // TODO ctx
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider(
+    "osmia", new OsmiaCtxCompletionItemProvider(), ".", "]"
+  ));
   initSettings();
 }
 

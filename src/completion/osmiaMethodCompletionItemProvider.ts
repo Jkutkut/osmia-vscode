@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import { OsmiaCompletionItemProvider } from '.';
-import {run} from 'osmia-npm';
 
 export default class OsmiaMethodCompletionItemProvider
   extends OsmiaCompletionItemProvider
@@ -17,7 +16,7 @@ export default class OsmiaMethodCompletionItemProvider
       return;
     }
 
-    const variable = this.variable(document, position);
+    const variable = this.variable(document, position.translate(0, -1));
     if (!variable) return;
     const varType = this.variableType(variable);
 

@@ -69,4 +69,7 @@ const getFileContent: (args: FileContentProps) => Promise<Result<string | null, 
   return { data: content };
 };
 
-export { getFileContent };
+export {
+  getOpenFile,
+  getFileContent
+};

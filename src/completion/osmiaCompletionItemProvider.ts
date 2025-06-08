@@ -23,7 +23,7 @@ export default class OsmiaCompletionItemProvider {
 
   protected variable(document: vscode.TextDocument, position: vscode.Position) {
     const line = document.lineAt(position.line);
-    let variableIdxEnd = position.character - 2;
+    let variableIdxEnd = position.character - 1;
     let variableIdxStart = variableIdxEnd;
     const depthArr = [];
     while (variableIdxStart >= 0) {
