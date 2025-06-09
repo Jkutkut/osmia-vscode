@@ -40,6 +40,7 @@ export default class OsmiaCompletionItemProvider {
         !(char >= '0' && char <= '9') &&
         !("_'\".".indexOf(char) >= 0)
       ) {
+        variableIdxStart++;
         break;
       }
       variableIdxStart--;
