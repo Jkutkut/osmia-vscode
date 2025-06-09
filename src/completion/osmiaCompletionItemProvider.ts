@@ -24,31 +24,49 @@ export default class OsmiaCompletionItemProvider {
   protected variable(document: vscode.TextDocument, position: vscode.Position) {
     const line = document.lineAt(position.line);
     let variableIdxEnd = position.character - 1;
-    let variableIdxStart = variableIdxEnd;
+    let variableValidIdxStart = variableIdxEnd;
     const depthArr = [];
-    while (variableIdxStart >= 0) {
-      const char = line.text[variableIdxStart];
-      if ("]}".indexOf(char) >= 0) {
-        depthArr.push(char);
+    while (variableValidIdxStart >= 0) {
+      const char = line.text[variableValidIdxStart];
+      if ("]})".indexOf(char) >= 0) {
+        switch (char) {
+          case "}":
+            depthArr.push("{");
+            break;
+          case "]":
+            depthArr.push("[");
+            break;
+          case ")":
+            depthArr.push("(");
+            break;
+        }
       }
       else if (depthArr.length > 0 && depthArr[depthArr.length - 1] === char) {
         depthArr.pop();
       }
-      else if (
-        depthArr.length === 0 &&
-        !(char.toLowerCase() >= 'a' && char.toLowerCase() <= 'z') &&
-        !(char >= '0' && char <= '9') &&
-        !("_'\".".indexOf(char) >= 0)
-      ) {
-        variableIdxStart++;
+      else if (depthArr.length == 0 && !this.isValidVariableChar(char)) {
+        variableValidIdxStart++;
         break;
       }
-      variableIdxStart--;
+      variableValidIdxStart--;
     }
-    variableIdxStart = Math.max(0, variableIdxStart);
-    if (variableIdxStart > variableIdxEnd) {
+    variableValidIdxStart = Math.max(0, variableValidIdxStart);
+    if (variableValidIdxStart > variableIdxEnd) {
       return null;
     }
-    return line.text.slice(variableIdxStart, variableIdxEnd + 1);
+    return line.text.slice(variableValidIdxStart, variableIdxEnd + 1);
+  }
+
+  protected isValidVariableChar(char: string) {
+    if (
+      (char.toLowerCase() >= 'a' && char.toLowerCase() <= 'z') ||
+      (char >= '0' && char <= '9')
+    ) {
+      return true;
+    }
+    if ("_.'\"".indexOf(char) >= 0) {
+      return true;
+    }
+    return false;
   }
 }
