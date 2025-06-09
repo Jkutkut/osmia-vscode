@@ -66,7 +66,7 @@ export default class OsmiaStmtCompletionItemProvider
       ),
       this.newCompletion(
         'for',
-        this.processSnippet('for ${1:condition} }}\n\t$2\n{{done'),
+        this.processSnippet('for ${1:var} in ${2:iterable} }}\n\t$2\n{{done'),
         'Insert a for statement'
       ),
       this.newCompletion(
