@@ -21,6 +21,31 @@ export default class OsmiaCompletionItemProvider {
     }
   }
 
+  protected formatDump(
+    variable: string,
+    triggerChar: string,
+    key: string,
+    {type, value, description}: {type: string, value: string, description?: string}) {
+    let descriptionString;
+    if (description) {
+      descriptionString = description;
+    }
+    else {
+      switch (type) {
+        case "variable":
+          descriptionString = `${key} = ${value}`;
+          break;
+        default:
+          descriptionString = `${type} ${variable}${triggerChar}${key}`;
+      }
+    }
+    return this.newCompletion(
+      key,
+      this.processSnippet(key),
+      descriptionString
+    );
+  }
+
   protected variable(document: vscode.TextDocument, position: vscode.Position) {
     const line = document.lineAt(position.line);
     let variableIdxEnd = position.character - 1;
