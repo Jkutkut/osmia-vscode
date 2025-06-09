@@ -45,12 +45,17 @@ export default class OsmiaCtxCompletionItemProvider
     const completions = [];
     for (const [key, value] of Object.entries<any>(dump)) {
       let description;
-      switch (value.type) {
-        case "variable":
-          description = `${key} = ${value.value}`;
-          break;
-        default:
-          description = `${value.type} ${variable}${triggerChar}${key}`;
+      if (value.description) {
+        description = value.description;
+      }
+      else {
+        switch (value.type) {
+          case "variable":
+            description = `${key} = ${value.value}`;
+            break;
+          default:
+            description = `${value.type} ${variable}${triggerChar}${key}`;
+        }
       }
       completions.push(this.newCompletion(
         key,
