@@ -10,7 +10,7 @@ to generate HTML, SQL, JSON, configuration files, or code in various languages.
 
 ## How to use
 
-Create a osmia file by creating a file with the extension `.osmia` or by selecting the osmia language from the command pallete.
+Create a osmia file by creating a file with the extension `.osmia` or by selecting the osmia language from the command pallette.
 
 An button with the osmia icon will appear in the editor to run the current file.
 You can also invoke the command with right click or by running the following command from the command palette:
@@ -19,7 +19,7 @@ You can also invoke the command with right click or by running the following com
 >osmia: run
 ```
 
-Optionally, a context file (json) can be added to inject variables.
+Optionally, a context file (json or yaml) can be added to inject variables.
 You will be prompted to select the file if none is detected.
 
 ## Features

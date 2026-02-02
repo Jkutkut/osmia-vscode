@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { OsmiaCompletionItemProvider } from '.';
-import {ctx_json_dump_variable} from 'osmia-npm';
+import {ctx_json_dump_variable, ctx_yaml_dump_variable} from 'osmia-npm';
 import {getOpenFile} from '../utils/input';
 
 export default class OsmiaCtxCompletionItemProvider
@@ -25,15 +25,28 @@ export default class OsmiaCtxCompletionItemProvider
       return;
     }
 
-    const alreadyOpenFile = getOpenFile("json", "json");
+    const alreadyOpenFile = getOpenFile(["json", "yaml"], ["json", "yaml"]);
     let ctx = null;
+    let type = 'json';
     if (alreadyOpenFile.data) {
-      ctx = alreadyOpenFile.data.getText();
+      ctx = alreadyOpenFile.data.file.getText();
+      type = alreadyOpenFile.data.extension;
     }
 
     let dump: any;
     try {
-      dump = JSON.parse(ctx_json_dump_variable(variable, ctx));
+      switch (type) {
+        case "json":
+          dump = JSON.parse(ctx_json_dump_variable(variable, ctx));
+          break;
+        case "yaml":
+          dump = JSON.parse(ctx_yaml_dump_variable(variable, ctx));
+          break;
+        default:
+          console.error("Unsupported context type for completions:", type);
+          return [];
+      }
+      // dump = JSON.parse(ctx_json_dump_variable(variable, ctx));
       if (dump.type !== "object") {
         console.debug("dump is not an object, is:", dump.type);
         return [];

@@ -1,0 +1,3 @@
+{{for lang in site.i18n.langs}}
+    {{lang.value}}
+{{done}}

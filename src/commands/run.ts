@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {getFileContent} from '../utils/input';
 import {storeOutput} from '../utils/output';
-import {runOsmiaAsWorker} from '../osmia';
+import {Ctx, runOsmiaAsWorker} from '../osmia';
 import {Result} from '../utils';
 
 interface RunCommandOptions {
@@ -21,18 +21,22 @@ const runCommand = async ({
       return;
     }
 
-    let jsonContent: Result<string | null, string> = {data: null};
+    let ctx: Ctx | null = null;
     if (requestCtx) {
-      jsonContent = await getFileContent({
-        extension: 'json',
-        language: 'json',
-        openLabel: 'Select context as JSON',
+      const ctxContent = await getFileContent({
+        extension: 'ctx',
+        language: ['json', 'yaml'],
+        openLabel: 'Select context',
         canBeNull: true
       });
-      if (jsonContent.error) {
-        vscode.window.showErrorMessage(`Error: ${jsonContent.error}`);
+      if (ctxContent.error) {
+        vscode.window.showErrorMessage(`Error: ${ctxContent.error}`);
         return;
       }
+      ctx = {
+        type: ctxContent.data!.extension as 'json' | 'yaml',
+        content: ctxContent.data!.data
+      };
     }
 
     const osmiaConfig = vscode.workspace.getConfiguration('osmia');
@@ -58,7 +62,7 @@ const runCommand = async ({
     };
 
     const result = await runOsmiaAsWorker({
-      code: osmiaContent.data!, ctx: jsonContent.data!,
+      code: osmiaContent.data!.data, ctx,
       osmiaCmd, executionTimeout,
       cancelNotification, cancelTimeout
     });

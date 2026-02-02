@@ -1,5 +1,5 @@
 import {Result} from "./utils";
-import {run, run_ctx} from 'osmia-npm';
+import {run, run_json_ctx, run_yaml_ctx} from 'osmia-npm';
 
 import { Worker } from 'worker_threads';
 import * as fs from 'fs';
@@ -14,10 +14,14 @@ function persistAsTmpFile(name: string, content: string): string {
   return tmpFilePath;
 }
 
+export interface Ctx {
+  type: 'json' | 'yaml';
+  content: string;
+}
 export type OsmiaOutput = Result<string, string>;
 export interface RunOsmiaOptions {
   code: string;
-  ctx: string | null;
+  ctx: Ctx | null;
 };
 export interface RunOsmiaCmdOptions extends RunOsmiaOptions {
   osmiaCmd: 'native' | string;
@@ -37,8 +41,18 @@ export const runOsmiaCmd = ({ osmiaCmd, code, ctx }: RunOsmiaCmdOptions): OsmiaO
     '--code', codeFile,
   ];
   if (ctx) {
-    const contextFile = persistAsTmpFile('ctx', ctx);
-    command.push('--ctx', contextFile);
+    switch (ctx.type) {
+      case 'json':
+        const contextFile = persistAsTmpFile('ctx', ctx.content);
+        command.push('--ctx-json', contextFile);
+        break;
+      case 'yaml':
+        const yamlContextFile = persistAsTmpFile('ctx', ctx.content);
+        command.push('--ctx-yaml', yamlContextFile);
+        break;
+      default:
+        return { error: `Unsupported context type: ${ctx.type}` };
+    }
   }
   const fullCommand = command.join(' ');
   console.debug('Running command:', fullCommand);
@@ -60,7 +74,14 @@ export const runOsmia = ({ code, ctx }: RunOsmiaOptions): OsmiaOutput => {
   console.groupEnd();
   try {
     if (ctx) {
-      return { data: run_ctx(ctx, code) };
+      switch (ctx.type) {
+        case 'json':
+          return { data: run_json_ctx(ctx.content, code) };
+        case 'yaml':
+          return { data: run_yaml_ctx(ctx.content, code) };
+        default:
+          return { error: `Unsupported context type: ${ctx.type}` };
+      }
     } else {
       return { data: run(code) };
     }

@@ -2,21 +2,32 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import {Option, Result} from '.';
 
-const getOpenFile: (extension: string, language: string) => Option<vscode.TextDocument> = (extension, language) => {
+const isValidDocument = (doc: vscode.TextDocument, extLang: string): boolean => {
+  return doc.languageId === extLang || doc.uri.fsPath.endsWith(`.${extLang}`);
+};
+
+interface VscodeDocument {
+  file: vscode.TextDocument;
+  extension: string;
+}
+
+const getOpenFile: (extension: string | string[], language: string | string[]) => Option<VscodeDocument> = (extension, language) => {
+  const extensions = Array.isArray(extension) ? extension : [extension];
+  const languages = Array.isArray(language) ? language : [language];
   const openEditors = vscode.window.visibleTextEditors;
+  const extLangs = [...extensions, ...languages];
   for (const editor of openEditors) {
     const document = editor.document;
     if (!document) {
       continue;
     }
     console.log('Document:', document.languageId, document);
-    if (
-      document.languageId === extension ||
-      document.languageId === language ||
-      document.uri?.fsPath.endsWith(`.${extension}`) ||
-      document.uri?.fsPath.endsWith(`.${language}`)
-    ) {
-      return {data: document};
+    const ext = extLangs.find(e => isValidDocument(document, e));
+    if (ext) {
+      return {data: {
+        file: document,
+        extension: ext
+      }};
     }
     // TODO check if something else can be done
   }
@@ -24,13 +35,18 @@ const getOpenFile: (extension: string, language: string) => Option<vscode.TextDo
 };
 
 interface FileContentProps {
-  extension: string;
-  language: string;
+  extension: string | string[];
+  language: string | string[];
   openLabel?: string;
   canBeNull?: boolean;
 }
 
-const getFileContent: (args: FileContentProps) => Promise<Result<string | null, string>> = async ({
+interface File {
+  data: string;
+  extension: string;
+}
+
+const getFileContent: (args: FileContentProps) => Promise<Result<File | null, string>> = async ({
   extension,
   language,
   openLabel,
@@ -39,14 +55,19 @@ const getFileContent: (args: FileContentProps) => Promise<Result<string | null, 
   openLabel = openLabel ?? `Select ${extension} file`;
   canBeNull = canBeNull ?? false;
 
-  const alreadyOpenFile = getOpenFile(extension, language);
+  const extensions = Array.isArray(extension) ? extension : [extension];
+  const languages = Array.isArray(language) ? language : [language];
+  const alreadyOpenFile = getOpenFile(extensions, languages);
   if (alreadyOpenFile.data) {
-    return { data: alreadyOpenFile.data.getText() };
+    return { data: {
+      data: alreadyOpenFile.data.file.getText(),
+      extension: alreadyOpenFile.data.extension
+    } };
   }
 
   if (canBeNull) {
     const confirmation = await vscode.window.showInformationMessage(
-      `No ${extension} file found. Do you want to open one?`,
+      `No ${extensions.join(', ')} file found. Do you want to open one?`,
       'Yes',
       'No'
     );
@@ -58,7 +79,7 @@ const getFileContent: (args: FileContentProps) => Promise<Result<string | null, 
 
   const f = await vscode.window.showOpenDialog({
     canSelectMany: false,
-    filters: { 'Osmia Files': [extension, '*'] },
+    filters: { 'Osmia Files': [...extensions, '*'] },
     openLabel
   });
   if (!f) {
@@ -68,7 +89,11 @@ const getFileContent: (args: FileContentProps) => Promise<Result<string | null, 
   if (!content || content.length === 0) {
     return { error: `A ${extension} file must be selected` };
   }
-  return { data: content };
+  const fileExtension = f[0].fsPath.split('.').pop() || '';
+  return { data: {
+    data: content,
+    extension: fileExtension
+  } };
 };
 
 export {

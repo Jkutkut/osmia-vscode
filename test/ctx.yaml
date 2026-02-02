@@ -1,0 +1,11 @@
+site:
+  i18n:
+    fallback: en
+    langs:
+      en:
+        label: English
+        lang: en
+      es_ES:
+        label: Español
+        lang: es
+        country: ES
