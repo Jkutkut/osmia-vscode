@@ -82,4 +82,4 @@ export const runNoCtx = async () => {
   await runCommand({
     requestCtx: false
   });
-}
+};

@@ -8,7 +8,7 @@ import * as path from 'path';
 
 function persistAsTmpFile(name: string, content: string): string {
   const date = new Date();
-  const dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.${date.getHours()}-${date.getMinutes()}`
+  const dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.${date.getHours()}-${date.getMinutes()}`;
   const tmpFilePath = path.join(os.tmpdir(), `${name}.${dateStr}.tmp`);
   fs.writeFileSync(tmpFilePath, content, { encoding: 'utf8' });
   return tmpFilePath;
@@ -69,7 +69,7 @@ export const runOsmia = ({ code, ctx }: RunOsmiaOptions): OsmiaOutput => {
     console.error('Error executing native osmia:', error);
     return { error: `${error}` };
   }
-}
+};
 
 export const runOsmiaAsWorker = (options: OsmiaWorkerProps): Promise<OsmiaOutput> => {
   const {

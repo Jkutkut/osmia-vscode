@@ -21,7 +21,9 @@ export default class OsmiaCtxCompletionItemProvider
 
     const varEndPos = triggerChar === "." ? position.translate(0, -1) : position;
     const variable = this.variable(document, varEndPos);
-    if (!variable) return;
+    if (!variable) {
+      return;
+    }
 
     const alreadyOpenFile = getOpenFile("json", "json");
     let ctx = null;
@@ -32,7 +34,7 @@ export default class OsmiaCtxCompletionItemProvider
     let dump: any;
     try {
       dump = JSON.parse(ctx_json_dump_variable(variable, ctx));
-      if (dump.type != "object") {
+      if (dump.type !== "object") {
         console.debug("dump is not an object, is:", dump.type);
         return [];
       }

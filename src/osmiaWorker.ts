@@ -5,7 +5,9 @@ import {
   OsmiaOutput
 } from './osmia';
 
-if (!parentPort) throw new Error("Not running inside worker_threads");
+if (!parentPort) {
+  throw new Error("Not running inside worker_threads");
+}
 
 parentPort.on('message', (task: OsmiaWorkerOptions) => {
   handleTask(task)

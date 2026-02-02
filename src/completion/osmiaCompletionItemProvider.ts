@@ -69,7 +69,7 @@ export default class OsmiaCompletionItemProvider {
       else if (depthArr.length > 0 && depthArr[depthArr.length - 1] === char) {
         depthArr.pop();
       }
-      else if (depthArr.length == 0 && !this.isValidVariableChar(char)) {
+      else if (depthArr.length === 0 && !this.isValidVariableChar(char)) {
         variableValidIdxStart++;
         break;
       }

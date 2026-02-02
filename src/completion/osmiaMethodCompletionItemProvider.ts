@@ -18,7 +18,9 @@ export default class OsmiaMethodCompletionItemProvider
     }
 
     const variable = this.variable(document, position.translate(0, -1));
-    if (!variable) return;
+    if (!variable) {
+      return;
+    }
     const varType = this.variableType(variable);
 
     console.debug('variable:', variable, "type", varType);

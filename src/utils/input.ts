@@ -6,7 +6,9 @@ const getOpenFile: (extension: string, language: string) => Option<vscode.TextDo
   const openEditors = vscode.window.visibleTextEditors;
   for (const editor of openEditors) {
     const document = editor.document;
-    if (!document) continue;
+    if (!document) {
+      continue;
+    }
     console.log('Document:', document.languageId, document);
     if (
       document.languageId === extension ||
